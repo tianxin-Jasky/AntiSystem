@@ -15,3 +15,5 @@ def fetch_spam_data(spam_url=SPAM_URL, spam_path=SPAM_PATH):
         tar_bz2_file = tarfile.open(path)
         tar_bz2_file.extractall(path=SPAM_PATH)
         tar_bz2_file.close()
+
+fetch_spam_data()
