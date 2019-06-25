@@ -173,7 +173,7 @@ print(X_few_wordcounts)
 
 
 from scipy.sparse import csr_matrix
-
+vac = {"aaa" : 1}
 class WordCounterToVectorTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, vocabulary_size=1000):
         self.vocabulary_size = vocabulary_size
@@ -184,7 +184,14 @@ class WordCounterToVectorTransformer(BaseEstimator, TransformerMixin):
                 total_count[word] += min(count, 10)
         most_common = total_count.most_common()[:self.vocabulary_size]
         self.most_common_ = most_common
-        self.vocabulary_ = {word: index + 1 for index, (word, count) in enumerate(most_common)}
+        global vac
+        if len(vac) < 800:
+            self.vocabulary_ = {word: index + 1 for index, (word, count) in enumerate(most_common)}
+        else:
+            self.vocabulary_ = vac
+        vac = self.vocabulary_
+        print(vac)
+        print(self.vocabulary_)
         return self
     def transform(self, X, y=None):
         rows = []
@@ -228,5 +235,20 @@ y_pred = log_clf.predict(X_test_transformed)
 print("Precision: {:.2f}%".format(100 * precision_score(y_test, y_pred)))
 print("Recall: {:.2f}%".format(100 * recall_score(y_test, y_pred)))
 
-from sklearn.externals import joblib
+
+import joblib
 joblib.dump(log_clf,'test.pkl')
+np.set_printoptions(threshold=np.inf)
+print(log_clf.predict(X_test_transformed))
+#print(X_test_transformed.toarray())
+
+print(vac)
+f = open("1","rb")
+a = [email.parser.BytesParser(policy=email.policy.default).parse(f)]
+b = preprocess_pipeline.fit_transform(a)
+print(log_clf.predict(b))
+import pickle
+def save_obj(obj, name ):
+    with open(name + '.pkl', 'wb') as f2:
+        pickle.dump(obj, f2, pickle.HIGHEST_PROTOCOL)
+save_obj(vac,"dic")
