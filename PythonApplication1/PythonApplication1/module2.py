@@ -54,7 +54,7 @@ except ImportError:
     stemmer = None
 import pickle
 def load_obj(name ):
-    with open('C:\\Users\\lenovo\\Documents\\GitHub\\AntiSystem\\PythonApplication1\\PythonApplication1\\' + name + '.pkl', 'rb') as f2:
+    with open(name + '.pkl', 'rb') as f2:
         return pickle.load(f2)
 
 vac = load_obj("dic")
