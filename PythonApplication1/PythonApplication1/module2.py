@@ -117,7 +117,7 @@ class WordCounterToVectorTransformer(BaseEstimator, TransformerMixin):
                 cols.append(self.vocabulary_.get(word, 0))
                 data.append(count)
         return csr_matrix((data, (rows, cols)), shape=(len(X), self.vocabulary_size + 1))
-
+#打开邮件进行预处理
 def openemail(emails):
     f = open(emails,"rb")
     a = [email.parser.BytesParser(policy=email.policy.default).parse(f)]

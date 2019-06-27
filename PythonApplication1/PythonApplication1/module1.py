@@ -2,9 +2,11 @@ from module2 import openemail
 import joblib
 import sys
 m = sys.argv[1]
+#加载模型
 mo = joblib.load('test.pkl')
+#预测
 a = mo.predict(openemail(m))
 if a[0] == 1:
-    print("垃圾邮件")
+    print("ru")
 else:
-    print("正常邮件")
+    print("no")
