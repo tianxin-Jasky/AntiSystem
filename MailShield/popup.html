@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link href="https://cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="./dist/css/popup.min.css">
+	</head>
+
+	<body>
+		<div class="container" id="container">
+
+			<div class="button-area">
+
+
+				<div class="account-btn-area" id="accountBtnArea">
+
+				</div>
+
+				<div class="button-row">
+					<button class="account-btn add-btn" id="showAddBtn"><i class="fa fa-plus"></i>&nbsp;添加邮箱</button>
+				</div>
+			</div>
+
+			<div class="add-area">
+
+				<div class="add-contianer">
+
+					<div class="add-container-row">
+						<label for="accountName"><i class="fa fa-user-plus"></i>&nbsp;邮箱简称：</label>
+						<input type="text" name="accountName" id="accountName" />
+					</div>
+
+					<div class="add-container-row">
+						<label for="account"><i class="fa fa-envelope-o"></i>&nbsp;邮箱账号：</label>
+						<input type="text" name="account" id="account" />
+					</div>
+
+					<div class="add-container-row">
+						<label for="password"><i class="fa fa-key"></i>&nbsp;账号密码：</label>
+						<input type="password" name="password" id="password" />
+					</div>
+
+					<div class="add-container-row btn-area">
+						<button id="cancelBtn" class="cancel-btn"><i class="fa fa-close"></i>&nbsp;取消</button>
+						<button id="confirmBtn" class="confirm-btn"><i class="fa fa-check"></i>&nbsp;确认</button>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="footer">
+				<!-- Powered by Jsr-->
+				<i class="fa fa-shield"> MailShield</i>
+			</div>
+		</div>
+	</body>
+
+	<script src="./dist/js/popup.min.js"></script>
+</html>
