@@ -128,3 +128,26 @@ def openemail(emails):
     
     X_train_transformed = preprocess_pipeline.fit_transform(a)
     return X_train_transformed
+
+def openemail2(url):
+    a = [email.parser.BytesParser(policy=email.policy.default).parse(url)]
+    preprocess_pipeline = Pipeline([
+        ("email_to_wordcount", EmailToWordCounterTransformer()),
+        ("wordcount_to_vector", WordCounterToVectorTransformer()),
+    ])
+    X_train_transformed = preprocess_pipeline.fit_transform(a)
+    return X_train_transformed
+
+def of(file):
+        f = open(file,"rb")
+        a = email.parser.BytesParser(policy=email.policy.default).parse(f)
+        return a
+def openemail3(filearray):
+    b = [of(file) for file in filearray]
+    preprocess_pipeline = Pipeline([
+        ("email_to_wordcount", EmailToWordCounterTransformer()),
+        ("wordcount_to_vector", WordCounterToVectorTransformer()),
+    ])
+    X_train_transformed = preprocess_pipeline.fit_transform(b)
+    return X_train_transformed
+
