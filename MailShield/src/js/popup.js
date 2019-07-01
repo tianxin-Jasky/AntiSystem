@@ -29,6 +29,7 @@ const Plugin = {
 		let password = '';
 		// 遍历 localStorage ，生成按钮
 		for (let key in localStorage) {
+			//显示每个btn的key值作为标识，然后重新创建一个btn
 			if (localStorage.hasOwnProperty(key)) {
 
 				str = that.getStorage(key);
@@ -58,24 +59,27 @@ const Plugin = {
 
 			if (className === 'account-btn'){
 
-				// 填充页面的 input
+				//是用来得到数据中相应的username和password
 				key = target.parentNode.getAttribute('storage-key');
 				storageObj = JSON.parse(that.getStorage(key));
-				that.fillTheBlank(storageObj.account, storageObj.password);
-
+				console.log("在这里传输")
+				console.log(storageObj.account);
+				console.log(storageObj.password);
+				// // 填充页面的 input
+				// key = target.parentNode.getAttribute('storage-key');
+				// storageObj = JSON.parse(that.getStorage(key));
+				// that.fillTheBlank(storageObj.account, storageObj.password);
 
 			} else if (className === 'fa fa-trash'){
-				
+
 				// 删除当前项
 				key = target.parentNode.parentNode.getAttribute('storage-key');
 				that.removeStorage(key);
 				location.reload();
-
-
 			} else {
 				console.log('neither account-btn nor delete-btn.');
 			}
-
+			                                                    
 		}, false);
 
 
@@ -92,7 +96,7 @@ const Plugin = {
 			location.reload();
 		}, false);
 
-		//确认按钮
+		//确认按钮 传输三个text并直接保存下来
 		confirmBtn.addEventListener('click', function() {
 
 			let accountName = accountNameInput.value;
@@ -122,11 +126,13 @@ const Plugin = {
 
 	},
 
+	//显示btnList的界面
 	showPanel: function() {
 		addArea.style.display = 'block';
 		showAddBtn.style.display = 'none';
 	},
 
+	//隐藏btnList的界面
 	hidePanel: function() {
 		addArea.style.display = 'none';
 		showAddBtn.style.display = 'block';
@@ -156,7 +162,7 @@ const Plugin = {
 		passwordInput.value = '';
 	},
 
-	// 在 showAddButton 之前加入一个 button
+	// 在 showAddButton 之中加入一个 button
 	createButton: function(wording, account, password) {
 
 		// button-row
@@ -178,11 +184,14 @@ const Plugin = {
 		let icon = document.createElement('i');
 		icon.className = 'fa fa-trash';
 
+		//在图标上添加子图标
 		iconDiv.appendChild(icon);
 
+		//在div中添加子类
 		div.appendChild(btn);
 		div.appendChild(iconDiv);
-		
+
+		//添加
 		accountBtnArea.appendChild(div);
 	},
 
