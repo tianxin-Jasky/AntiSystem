@@ -17,6 +17,8 @@ const accountBtnArea = find('#accountBtnArea');
 const accountNameInput = find('#accountName');
 const accountInput = find('#account');
 const passwordInput = find('#password');
+//用于连接服务器。
+var socket;
 
 
 const Plugin = {
@@ -62,13 +64,14 @@ const Plugin = {
 				//是用来得到数据中相应的username和password
 				key = target.parentNode.getAttribute('storage-key');
 				storageObj = JSON.parse(that.getStorage(key));
-				console.log("在这里传输")
-				console.log(storageObj.account);
-				console.log(storageObj.password);
+
 				// // 填充页面的 input
 				// key = target.parentNode.getAttribute('storage-key');
 				// storageObj = JSON.parse(that.getStorage(key));
 				// that.fillTheBlank(storageObj.account, storageObj.password);
+
+				//调用服务器的连接，并传输相应的account和password
+				that.sendMsg(storageObj.account,storageObj.password);
 
 			} else if (className === 'fa fa-trash'){
 
@@ -79,7 +82,7 @@ const Plugin = {
 			} else {
 				console.log('neither account-btn nor delete-btn.');
 			}
-			                                                    
+
 		}, false);
 
 
@@ -125,6 +128,68 @@ const Plugin = {
 		}, false);
 
 	},
+
+	//对于java服务器的连接
+	connectServer:function(){
+		//本地的ip地址
+		var socket_ip="192.168.153.245";
+
+		socket= new WebSocket('ws://'+socket_ip+':4321');
+
+		socket.onopen = function(event)
+		{
+			console.log("连接服务成功！");
+		};
+
+		// 监听消息
+		socket.onmessage = function(event)
+		{
+			console.log('Client received a message',event);
+			var str = event.data.split('&');
+
+			console.log(str.length);
+			for(var i=0;i<str.length;i++){
+				var ramainder = i%3;
+				switch (ramainder) {
+					case 0:
+						mail_subject = str[i];
+						break;
+						//这里不会去考虑 缺少某个数据的情况
+					case 1:
+						 mail_time = str[i];
+						 break;
+					case 2:
+						mail_sender = str[i];
+
+						//TODO:在这里去调用之后的函数
+						console.log(mail_subject);
+						console.log(mail_time);
+						console.log(mail_sender);
+						break;
+				}
+
+			}
+		};
+
+		// 监听Socket的关闭
+		socket.onclose = function(event)
+		{
+			console.log('服务器的关闭')
+		};
+
+		socket.onerror = function(event) {
+			//alert('无法连接到:' + socket_ip);
+			console.log('服务器的连接失败')
+		};
+
+	},
+
+	//发送客户机account和password
+	sendMsg:function(account,password){
+			var message = account + "&"+password;
+			socket.send(message);
+			// socket.send(password);
+		},
 
 	//显示btnList的界面
 	showPanel: function() {
@@ -213,6 +278,8 @@ const Plugin = {
 
 	init: function() {
 		this.initButton();
+		//一开始初始化的时候，就可以连接服务器了
+		this.connectServer();
 		this.bindEvent();
 	}
 
