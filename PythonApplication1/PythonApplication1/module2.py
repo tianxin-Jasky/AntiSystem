@@ -58,6 +58,7 @@ def load_obj(name ):
         return pickle.load(f2)
 
 vac = load_obj("dic")
+#数据预处理
 class EmailToWordCounterTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, strip_headers=True, lower_case=True, remove_punctuation=True,
                  replace_urls=True, replace_numbers=True, stemming=True):
@@ -117,9 +118,33 @@ class WordCounterToVectorTransformer(BaseEstimator, TransformerMixin):
                 cols.append(self.vocabulary_.get(word, 0))
                 data.append(count)
         return csr_matrix((data, (rows, cols)), shape=(len(X), self.vocabulary_size + 1))
-#打开邮件进行预处理
+#打开邮件进行预测
+
+import tempfile
+#远程连接
+def string_to_file(string):
+    file_like_obj = tempfile.NamedTemporaryFile()
+    file_like_obj.write(string)
+    # 确保string立即写入文件
+    file_like_obj.flush()
+    # 将文件读取指针返回到文件开头位置
+    file_like_obj.seek(0)
+    return file_like_obj
+from module3 import get_tra_res
+def conCH(contents):
+    zhmodel = re.compile(u'[\u4e00-\u9fa5]')
+    match = zhmodel.search(contents)
+    if match:
+        return True
+    else:
+        return False
+
 def openemail(emails):
     f = open(emails,"rb")
+    #con = f.read()
+    #if conCH(con):
+    #    cores = get_tra_res(con)
+    #f = string_to_file(con)
     a = [email.parser.BytesParser(policy=email.policy.default).parse(f)]
     preprocess_pipeline = Pipeline([
         ("email_to_wordcount", EmailToWordCounterTransformer()),
@@ -128,7 +153,6 @@ def openemail(emails):
     
     X_train_transformed = preprocess_pipeline.fit_transform(a)
     return X_train_transformed
-
 def openemail2(url):
     a = [email.parser.BytesParser(policy=email.policy.default).parse(url)]
     preprocess_pipeline = Pipeline([
@@ -137,7 +161,6 @@ def openemail2(url):
     ])
     X_train_transformed = preprocess_pipeline.fit_transform(a)
     return X_train_transformed
-
 def of(file):
         f = open(file,"rb")
         a = email.parser.BytesParser(policy=email.policy.default).parse(f)

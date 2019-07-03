@@ -3,7 +3,7 @@ from module2 import openemail2
 import joblib
 import sys
 import tempfile
-
+#远程连接
 def string_to_file(string):
     file_like_obj = tempfile.NamedTemporaryFile()
     file_like_obj.write(string)

@@ -1,4 +1,5 @@
 from module2 import openemail
+from module2 import openemail2
 from module2 import openemail3
 import joblib
 import sys
@@ -6,6 +7,15 @@ import os
 m1 = len(sys.argv)
 #加载模型
 mo = joblib.load('test.pkl')
+def string_to_file(string):
+    file_like_obj = tempfile.NamedTemporaryFile()
+    file_like_obj.write(string)
+    # 确保string立即写入文件
+    file_like_obj.flush()
+    # 将文件读取指针返回到文件开头位置
+    file_like_obj.seek(0)
+    return file_like_obj
+
 def get_all_files(dir):
     files_ = []
     list = os.listdir(dir)
@@ -23,9 +33,9 @@ if m1 == 2:
         a = mo.predict(openemail(m))
         print(a)
         if a[0] == 1:
-            print("ru")
+            print("垃圾邮件")
         else:
-            print("no")
+            print("正常邮件")
     if os.path.isdir(m):
         files = get_all_files(m)
         result = mo.predict(openemail3(files))
@@ -35,6 +45,14 @@ if m1 == 2:
             else:
                 c = "正常邮件"
             print("文件",files[i],"是",c)
+    else:
+        ms = string_to_file(m)
+        a = mo.predict(openemail2(ms))
+        if a[0] == 1:
+            print("垃圾邮件")
+        else:
+            print("正常邮件")
+ 
 
 elif m1 == 1:
     print("no filename")
