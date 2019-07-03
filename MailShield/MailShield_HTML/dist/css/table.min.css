@@ -1,0 +1,1 @@
+table{margin:auto;width:60%;border:1px solid black;border-collapse:collapse;}table caption{color:blue;font:34px consolas bold;}table th,table td{border:1px solid black;text-align:center;}table th{font:20px consolas bold;background-color:gray;}table tr:nth-child(n+2){background-color:cyan;}table tr:nth-child(2n+2){background-color:red;}
