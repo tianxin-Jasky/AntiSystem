@@ -28,18 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.删除邮件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.放入垃圾箱ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Control;
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.ContextMenuStrip = this.contextMenuStrip1;
             this.textBox1.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox1.Font = new System.Drawing.Font("宋体", 15F);
             this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Close;
@@ -57,6 +63,7 @@
             // textBox2
             // 
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.ContextMenuStrip = this.contextMenuStrip1;
             this.textBox2.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox2.Font = new System.Drawing.Font("宋体", 15F);
             this.textBox2.Location = new System.Drawing.Point(132, 0);
@@ -72,6 +79,7 @@
             // textBox3
             // 
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox3.ContextMenuStrip = this.contextMenuStrip1;
             this.textBox3.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.textBox3.Font = new System.Drawing.Font("宋体", 15F);
             this.textBox3.Location = new System.Drawing.Point(513, 0);
@@ -88,6 +96,7 @@
             // textBox4
             // 
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox4.ContextMenuStrip = this.contextMenuStrip1;
             this.textBox4.Cursor = System.Windows.Forms.Cursors.Default;
             this.textBox4.Font = new System.Drawing.Font("宋体", 15F);
             this.textBox4.Location = new System.Drawing.Point(0, 23);
@@ -122,10 +131,31 @@
             this.label1.Text = "危！";
             this.label1.Visible = false;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.删除邮件ToolStripMenuItem,
+            this.放入垃圾箱ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(137, 48);
+            // 
+            // 删除邮件ToolStripMenuItem
+            // 
+            this.删除邮件ToolStripMenuItem.Name = "删除邮件ToolStripMenuItem";
+            this.删除邮件ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.删除邮件ToolStripMenuItem.Text = "删除邮件";
+            // 
+            // 放入垃圾箱ToolStripMenuItem
+            // 
+            this.放入垃圾箱ToolStripMenuItem.Name = "放入垃圾箱ToolStripMenuItem";
+            this.放入垃圾箱ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.放入垃圾箱ToolStripMenuItem.Text = "放入垃圾箱";
+            // 
             // mail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox4);
@@ -136,6 +166,7 @@
             this.Name = "mail";
             this.Size = new System.Drawing.Size(888, 46);
             this.Click += new System.EventHandler(this.textBox4_Click);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,5 +180,8 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 删除邮件ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 放入垃圾箱ToolStripMenuItem;
     }
 }

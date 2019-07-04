@@ -23,6 +23,7 @@ namespace MyMail
         int nowCount = 0;
         public static Pop3Client Client;
         ArrayList mails = new ArrayList();
+        Dictionary<int ,string> filelist = new Dictionary<int,string>();
         public detail()
         {
             Client = Form1.Client;
@@ -108,6 +109,8 @@ namespace MyMail
                 //File.WriteAllText(path, l_strResult);
                 //string s = Cmd("python module1.py " + path);
                 mail nm = new mail(zhuti,dizhi,shijan,mainbody,message);
+                nm.Name = (mCount - i).ToString();
+                nm.clicked += new mail.thisclick(showdetail);
                 mails.Add(nm);
                 this.flowLayoutPanel1.Controls.Add(nm);
                 Console.WriteLine(i);
@@ -282,7 +285,6 @@ namespace MyMail
             int i = 0;
             foreach (mail ma in mails)
             {
-                ma.disrubbish();
                 string path = i + ".txt";
                 File.WriteAllText(path, ma.getbody());
                 i++;
@@ -303,6 +305,7 @@ namespace MyMail
 
         private void button1_Click(object sender, EventArgs e)
         {
+            clear();
             updatedata(nowCount);
             Thread thread = new Thread(isRubbish);
             thread.Start();
@@ -310,9 +313,18 @@ namespace MyMail
 
         private void button2_Click(object sender, EventArgs e)
         {
+            clear();
             updatedata2(nowCount);
+            Thread thread = new Thread(isRubbish);
+            thread.Start();
         }
-
+        private void clear()
+        {
+            foreach(mail ma in mails)
+            {
+                ma.disrubbish();
+            }
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
             try
@@ -339,6 +351,42 @@ namespace MyMail
                 return strText.Substring(0, length);
 
             return strText;
+        }
+        private void showdetail(object sender, MyEventArgs e)
+        {
+            OpenPop.Mime.Message message = e.message;
+            maildetail mt = new maildetail(message);
+            
+            foreach(Control con in mails)
+            {
+                if(con.Name == e.name)
+                {
+                    int t =  this.flowLayoutPanel1.Controls.GetChildIndex(con);
+                    this.flowLayoutPanel1.Controls.Add(mt);
+                    this.flowLayoutPanel1.Controls.SetChildIndex(mt,t+1);
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.flowLayoutPanel1.Visible = true;
+            this.flowLayoutPanel2.Visible = false;
+            this.flowLayoutPanel3.Visible = false;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.flowLayoutPanel1.Visible = false;
+            this.flowLayoutPanel2.Visible = true;
+            this.flowLayoutPanel3.Visible = false;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.flowLayoutPanel1.Visible = false;
+            this.flowLayoutPanel2.Visible = false;
+            this.flowLayoutPanel3.Visible = true;
         }
     }
 }

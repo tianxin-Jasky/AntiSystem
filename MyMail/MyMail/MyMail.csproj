@@ -67,12 +67,25 @@
     <Compile Include="mail.Designer.cs">
       <DependentUpon>mail.cs</DependentUpon>
     </Compile>
+    <Compile Include="maildetail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="maildetail.Designer.cs">
+      <DependentUpon>maildetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="maildetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="maildetails.Designer.cs">
+      <DependentUpon>maildetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="mial.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="detail.resx">
@@ -83,6 +96,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="mail.resx">
       <DependentUpon>mail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="maildetail.resx">
+      <DependentUpon>maildetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="maildetails.resx">
+      <DependentUpon>maildetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

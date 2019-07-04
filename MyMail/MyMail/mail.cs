@@ -12,13 +12,15 @@ namespace MyMail
 {
     public partial class mail : UserControl
     {
+        public delegate void thisclick(object sender, MyEventArgs e);
+        public event thisclick clicked;
         public OpenPop.Mime.Message message;
         public mail()
         {
             InitializeComponent();
             this.textBox1.HideSelection = false;
         }
-        public mail(string name,string add,string time, string body, OpenPop.Mime.Message message)
+        public mail(string name, string add, string time, string body, OpenPop.Mime.Message message)
         {
             InitializeComponent();
             this.textBox1.Text = name;
@@ -43,12 +45,13 @@ namespace MyMail
 
         private void mail_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void textBox4_Click(object sender, EventArgs e)
         {
-        Console.WriteLine("click");
+            MyEventArgs mye = new MyEventArgs(message,this.Name);
+            clicked(sender, mye);
         }
 
         private void textBox4_Enter(object sender, EventArgs e)
@@ -71,8 +74,9 @@ namespace MyMail
                 rubbishcallback ru = new rubbishcallback(rubbish);
                 this.Invoke(ru);
 
-            }else
-            this.label1.Visible = true;
+            }
+            else
+                this.label1.Visible = true;
         }
         public void disrubbish()
         {
@@ -88,6 +92,16 @@ namespace MyMail
         public string getbody()
         {
             return this.textBox4.Text;
+        }
+    }
+    public class MyEventArgs : EventArgs
+    {
+        public OpenPop.Mime.Message message;
+        public string name;
+        public MyEventArgs(OpenPop.Mime.Message message,string name)
+        {
+            this.name = name;
+            this.message = message;
         }
     }
 }
