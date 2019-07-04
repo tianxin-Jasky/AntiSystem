@@ -1,7 +1,6 @@
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -16,7 +15,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.io.PrintStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -39,6 +37,10 @@ public class  mail {
     private String saveAttachPath = ""; // 附件下载后的存放目录
     private StringBuffer bodyText = new StringBuffer(); // 存放邮件内容的StringBuffer对象
     private String dateFormat = "yy-MM-dd HH:mm"; // 默认的日前显示格式
+    public ArrayList<String> mail_information=new ArrayList<>();
+    public  int mail_number=0;
+    public  String signal = "!@#%&";
+    public ArrayList<String> CMD_judge=new ArrayList<>();
 
     /**
      * 构造函数,初始化一个MimeMessage对象
@@ -396,49 +398,6 @@ public class  mail {
 
 
 
-
-    /**
-     *　ReceiveEmail类测试
-     */
-//    public static void main(String[] args) {
-//        WebSocketImpl.DEBUG = false;
-//        server s = new server(9090);//实例化一个监听服务器
-//        s.start();//启动服务器
-////        server(9090);
-////        CMD();
-//    }
-
-//    //读取输入文本，返回响应文本（二级制，对象）
-//    public static void  server(int port) {
-//        try {
-//            //创建一个serversocket
-//            ServerSocket mysocket=new ServerSocket(port);
-//            System.out.println("socket服务器启动...............");
-//            //等待监听是否有客户端连接
-//
-//            Socket sk = mysocket.accept();
-//            System.out.println("客户端连接...............");
-//            //接收文本信息
-//            BufferedReader in =new BufferedReader(new InputStreamReader(sk.getInputStream()));
-//
-//
-//
-//            String s1 = in.readLine();
-//            String s2 = in.readLine();
-//
-//            WebSocketImpl.DEBUG = false;
-//            server s = new server(port);//实例化一个监听服务器
-//            s.start();//启动服务器
-//
-//            String host = "pop3.163.com";
-//            String username=s.account;
-//            String password=s.password;
-//            String username = s1;
-//            String password = s2;
-//            System.out.println(s1);
-
-
-
 public void mailStorage(String host,String username,String password){
         try {
             Properties props = new Properties();
@@ -451,48 +410,36 @@ public void mailStorage(String host,String username,String password){
             folder.open(Folder.READ_ONLY);
             Message message[] = folder.getMessages();
 
+            //第一个是邮件的数量
+            mail_number=message.length;
             mail re = null;
 
-            for (int i = 0; i < message.length; i++) {
+            for (int i = 0; i < message.length ; i++) {
                 re = new  mail((MimeMessage) message[i]);
 
                 re.setDateFormat("yy年MM月dd日　HH:mm");
                 re.getMailContent((Part) message[i]);
                 PrintStream ps = new PrintStream("e:/test/"+i+".txt");  // 创建一个打印输出流，输出的目标是：E盘的txt文件
-                System.setOut(ps);//把创建的打印输出流赋给系统。即系统下次向 ps输出
-                System.out.println( re.getBodyText());
+                //PrintStream ps = new PrintStream("/Users/zhouqc/Desktop/txt/"+re.getSubject()+".txt");
+                ps.println(ReduceHtml2Text.removeHtmlTag(re.getBodyText()));
 
+                //对传输给插件的进行信息的处理
+                //主题
+                mail_information.add(re.getSubject());
+                System.out.println(re.getSubject());
+                //时间re.getSentDate()
+                mail_information.add(re.getSentDate());
+                System.out.println(re.getSentDate());
+                //收件人地址re.getMailAddress("to")
+                mail_information.add(re.getMailAddress("to"));
+                System.out.println(re.getMailAddress("to"));
             }
         }catch (Exception e) {
         }
-}
-//            Properties props = new Properties();
-//            Session session = Session.getDefaultInstance(props, null);
-//
-//            Store store = session.getStore("pop3");
-//            store.connect(host, username, password);
-//
-//            Folder folder = store.getFolder("INBOX");
-//            folder.open(Folder.READ_ONLY);
-//            Message message[] = folder.getMessages();
-//
-//            mail re = null;
-//
-//            for (int i = 0; i < message.length; i++) {
-//                re = new  mail((MimeMessage) message[i]);
-//
-//                re.setDateFormat("yy年MM月dd日　HH:mm");
-//                re.getMailContent((Part) message[i]);
-//                PrintStream ps = new PrintStream("e:/test/"+i+".txt");  // 创建一个打印输出流，输出的目标是：E盘的txt文件
-//                System.setOut(ps);//把创建的打印输出流赋给系统。即系统下次向 ps输出
-//                System.out.println( re.getBodyText());
-//
-//            }
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//    }
-    public static void  CMD() {
+    }
+
+
+    public  void   CMD() {
         String cmd="python module1.py E:\\test";
 
         String line = null;
@@ -505,8 +452,9 @@ public void mailStorage(String host,String username,String password){
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line + "\n");
 
-                System.out.println(line);
 
+                CMD_judge.add(line);
+                System.out.println(line);
             }
         } catch (Exception e) {
             e.printStackTrace();

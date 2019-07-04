@@ -37,8 +37,7 @@ public class server extends WebSocketServer{
     //接受客户机的信息，并且向客户机发送相应的信息。
     @Override
     public void onMessage(WebSocket conn, String message) {
-        String msg = "收到信息："+message;
-//        System.out.println(msg);
+
         setAccountAndPassword(message);
         userJoin(conn,message);//用户加入
 
@@ -47,13 +46,25 @@ public class server extends WebSocketServer{
         String host="pop3.163.com";
         //先读取
         m.mailStorage(host,account,password);
-        //在cmd
+        //对邮件的内容进行判断。
         m.CMD();
 
 
+        //给msg赋值传给插件
+        String msg = m.mail_number+m.signal;
+        for(int i=0,j=0;i<m.mail_information.size();i++){
+            msg=msg+m.mail_information.get(i)+m.signal;
+            if(i%3 == 2){
+                msg=msg+m.CMD_judge.get(j)+m.signal;
+                //msg=msg+"normal"+m.signal;
+                j++;
+            }
+        }
+        //对得到的数据进行处理
+
 
         //TODO: 在这里调用返回判定的方法。
-
+        //String msg = "1!@#%&你好啊!@#%&1时间!@#%&收件人地址!@#%&1rubbishi";
         WsUtil.sendMessageToUser(conn,msg);
     }
 
@@ -88,10 +99,12 @@ public class server extends WebSocketServer{
 
     //将message的用户名和密码分离
     public void setAccountAndPassword(String m){
-        String[] strArr = m.split("&");
+        String[] strArr = m.split("!@#%&");
         account=strArr[0];
         password=strArr[1];
         System.out.println(account);
         System.out.println(password);
     }
+
+
 }

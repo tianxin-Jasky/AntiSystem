@@ -34,7 +34,8 @@ if m1 == 2:
                 c = "rubbish"
             else:
                 c = "normal"
-            print("file",files[i],"is",c)
+            #print("file",files[i],"is",c)
+            print(c)
 
 elif m1 == 1:
     print("no filename")
@@ -47,5 +48,6 @@ elif m1 > 2:
             c = "rubbish"
         else:
             c = "normal"
-        print("file",a[i],"is",c)
+        #print("file",a[i],"is",c)
+        print(c)
     

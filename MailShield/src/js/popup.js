@@ -133,18 +133,19 @@ const Plugin = {
 	//对于java服务器的连接
 	connectServer:function(){
 		//本地的ip地址
-		//var socket_ip="192.168.153.245";
-		var socket_ip="127.0.0.1";
+		var socket_ip="192.168.153.245";
+		//var socket_ip="127.0.0.1";
 
 		let that = this;
 
-		socket= new WebSocket('ws://'+socket_ip+':1111');
+		socket= new WebSocket('ws://'+socket_ip+':1234');
 
+		console.log("连接服务开始！");
 		socket.onopen = function(event)
 		{
 			console.log("连接服务成功！");
 		};
-
+		console.log("连接服务结束！");
 		var mail_subject="";
 		var mail_time="";
 		var mail_sender=""
@@ -154,8 +155,10 @@ const Plugin = {
 		// 监听消息
 		socket.onmessage = function(event)
 		{
-			console.log('Client received a message',event);
-			var str = event.data.split('&');
+			//console.log('Client received a message',event);
+
+			//这是分割的
+			var str = event.data.split('!@#%&');
 
 			//将邮箱的数量保存下来
 			let MailObj = {
@@ -165,7 +168,9 @@ const Plugin = {
 			var mai_key = "!！@@##¥";
 			that.setStorage(mai_key,mail_number);
 
-			console.log("邮箱的数量：",JSON.parse(localStorage.getItem("!！@@##¥")).MailNumber);
+
+
+			//console.log("邮箱的数量：",JSON.parse(localStorage.getItem("!！@@##¥")).MailNumber);
 
 			for(var i=1,j=0;i<str.length;i++,j++){
 				var ramainder = j%4;
@@ -221,7 +226,7 @@ const Plugin = {
 
 	//发送客户机account和password
 	sendMsg:function(account,password){
-			var message = account + "&"+password;
+			var message = account + "!@#%&"+password;
 			socket.send(message);
 			// socket.send(password);
 		},
