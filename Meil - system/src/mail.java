@@ -38,7 +38,8 @@ public class  mail {
     private StringBuffer bodyText = new StringBuffer(); // 存放邮件内容的StringBuffer对象
     private String dateFormat = "yy-MM-dd HH:mm"; // 默认的日前显示格式
     public ArrayList<String> mail_information=new ArrayList<>();
-    public  int mail_number=0;
+    public  int mail_number=-1;
+    public  boolean Loginjudge=true;
     public  String signal = "!@#%&";
     public ArrayList<String> CMD_judge=new ArrayList<>();
 
@@ -435,6 +436,8 @@ public void mailStorage(String host,String username,String password){
                 System.out.println(re.getMailAddress("to"));
             }
         }catch (Exception e) {
+            Loginjudge=false;
+            System.out.println("邮箱登陆失败");
         }
     }
 
@@ -458,6 +461,7 @@ public void mailStorage(String host,String username,String password){
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("python程序调用失败");
         }
     }
 }

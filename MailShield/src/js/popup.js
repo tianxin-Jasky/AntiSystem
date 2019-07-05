@@ -21,6 +21,9 @@ const passwordInput = find('#password');
 var socket;
 
 
+// var loginjudge=true;
+var Wrongmail;
+
 const Plugin = {
 
 	initButton: function() {
@@ -64,6 +67,7 @@ const Plugin = {
 
 				//target.parentNode.getAttribute('storage-key');是为了获取对应元素的值
 				key = target.parentNode.getAttribute('storage-key');
+				Wrongmail=key;
 				storageObj = JSON.parse(that.getStorage(key));
 
 				// // 填充页面的 input
@@ -74,6 +78,11 @@ const Plugin = {
 				//调用服务器的连接，并传输相应的account和password
 				that.sendMsg(storageObj.account,storageObj.password);
 
+				// //这里如果邮箱登陆失败，就会删除
+				// if (!loginjudge){
+				// 	that.removeStorage(key);
+				// 	loginjudge=true;
+				// }
 			} else if (className === 'fa fa-trash'){
 
 				// 删除当前项
@@ -160,54 +169,65 @@ const Plugin = {
 			//这是分割的
 			var str = event.data.split('!@#%&');
 
-			//将邮箱的数量保存下来
-			let MailObj = {
-				MailNumber:parseInt(str[0])
-			};
-			let  mail_number = JSON.stringify(MailObj);
-			var mai_key = "!！@@##¥";
-			that.setStorage(mai_key,mail_number);
+			if(parseInt(str[0]) != -1){
+				//邮箱登陆成功
+				// loginjudge=true;
+
+				//将邮箱的数量保存下来
+				let MailObj = {
+					MailNumber:parseInt(str[0])
+				};
+				let  mail_number = JSON.stringify(MailObj);
+				var mai_key = "!！@@##¥";
+				that.setStorage(mai_key,mail_number);
 
 
 
-			//console.log("邮箱的数量：",JSON.parse(localStorage.getItem("!！@@##¥")).MailNumber);
+				//console.log("邮箱的数量：",JSON.parse(localStorage.getItem("!！@@##¥")).MailNumber);
 
-			for(var i=1,j=0;i<str.length;i++,j++){
-				var ramainder = j%4;
-				switch (ramainder) {
-					case 0:
-						mail_subject = str[i];
-						break;
-						//这里不会去考虑 缺少某个数据的情况
-					case 1:
-						 mail_time = str[i];
-						 break;
-					case 2:
-						mail_sender = str[i];
-						break;
-					case 3:
-						mail_judge = str[i];
-						//TODO:在这里去调用跳转界面的函数，用上面已经有的三个元素去给他赋值
-						mail_Count++;
+				for(var i=1,j=0;i<str.length;i++,j++){
+					var ramainder = j%4;
+					switch (ramainder) {
+						case 0:
+							mail_subject = str[i];
+							break;
+							//这里不会去考虑 缺少某个数据的情况
+						case 1:
+							 mail_time = str[i];
+							 break;
+						case 2:
+							mail_sender = str[i];
+							break;
+						case 3:
+							mail_judge = str[i];
+							//TODO:在这里去调用跳转界面的函数，用上面已经有的三个元素去给他赋值
+							mail_Count++;
 
-						let subject =mail_subject;
-						let time=mail_time;
-						let sender=mail_sender;
-						let judge=mail_judge;
+							let subject =mail_subject;
+							let time=mail_time;
+							let sender=mail_sender;
+							let judge=mail_judge;
 
-						let mailObj = {
-							Mailsubject:subject,
-							Mailtime:time,
-							Mailsender:sender,
-							Mailjudge:judge
-						};
-						let mailStr = JSON.stringify(mailObj);
-						that.setStorage(mail_Count,mailStr);
-						break;
+							let mailObj = {
+								Mailsubject:subject,
+								Mailtime:time,
+								Mailsender:sender,
+								Mailjudge:judge
+							};
+							let mailStr = JSON.stringify(mailObj);
+							that.setStorage(mail_Count,mailStr);
+							break;
+					}
 				}
+				//调用那边的html
+				window.location = "/MailShield_HTML/result.html";
+			}else {
+				// loginjudge=false;
+				that.removeStorage(Wrongmail)
+				window.location = "/MailShield_HTML/retry.html";
+				//这里如果邮箱登陆失败，就会删除
 			}
-			//调用那边的html
-			window.location = "/MailShield_HTML/result.html";
+
 
 		};
 

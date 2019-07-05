@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"name": "MailShield_TEXT",
+	"name": "MailShield",
 	"version": "1.0",
 	"description": "垃圾邮件识别插件",
 	"icons": {
@@ -10,7 +10,7 @@
 	},
 
 	"browser_action": {
-		"default_title": "智能识别垃圾邮件测试版",
+		"default_title": "智能识别垃圾邮件",
 		"default_popup": "popup.html"
 	},
 

@@ -50,17 +50,20 @@ public class server extends WebSocketServer{
         m.CMD();
 
 
-        //给msg赋值传给插件
-        String msg = m.mail_number+m.signal;
-        for(int i=0,j=0;i<m.mail_information.size();i++){
-            msg=msg+m.mail_information.get(i)+m.signal;
-            if(i%3 == 2){
-                msg=msg+m.CMD_judge.get(j)+m.signal;
-                //msg=msg+"normal"+m.signal;
-                j++;
+        String msg = null;
+        msg = m.mail_number+m.signal;
+        if(m.Loginjudge){
+            //给msg赋值传给插件
+            //msg = m.mail_number+m.signal;
+            for(int i=0,j=0;i<m.mail_information.size();i++){
+                msg=msg+m.mail_information.get(i)+m.signal;
+                if(i%3 == 2){
+                    msg=msg+m.CMD_judge.get(j)+m.signal;
+                    //msg=msg+"normal"+m.signal;
+                    j++;
+                }
             }
         }
-        //对得到的数据进行处理
 
 
         //TODO: 在这里调用返回判定的方法。
@@ -103,7 +106,7 @@ public class server extends WebSocketServer{
         account=strArr[0];
         password=strArr[1];
         System.out.println(account);
-        System.out.println(password);
+        //System.out.println(password);
     }
 
 
