@@ -431,8 +431,8 @@ public void mailStorage(String host,String username,String password){
                 //时间re.getSentDate()
                 mail_information.add(re.getSentDate());
                 System.out.println(re.getSentDate());
-                //收件人地址re.getMailAddress("to")
-                mail_information.add(re.getMailAddress("to"));
+                //发件人地址re.getMailAddress("to")
+                mail_information.add(re.getFrom());
                 System.out.println(re.getMailAddress("to"));
             }
         }catch (Exception e) {
