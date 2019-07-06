@@ -1,6 +1,8 @@
 import java.lang.reflect.Array;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -43,12 +45,23 @@ public class server extends WebSocketServer{
 
         //初始化
         mail m=new mail();
-        String host="pop3.163.com";
+
+        String reg="163.com";
+        Pattern p =Pattern.compile(reg);
+        Matcher matcher = p.matcher(account);
+        boolean result=matcher.find();
+        //true为163，false为qq
+        String host="";
+        if(result){
+            host="pop3.163.com";
+        }else {
+            host = "pop.qq.com";
+        }
+
         //先读取
         m.mailStorage(host,account,password);
         //对邮件的内容进行判断。
         m.CMD();
-
 
         String msg = null;
         msg = m.mail_number+m.signal;

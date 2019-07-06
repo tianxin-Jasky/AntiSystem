@@ -70,19 +70,10 @@ const Plugin = {
 				Wrongmail=key;
 				storageObj = JSON.parse(that.getStorage(key));
 
-				// // 填充页面的 input
-				// key = target.parentNode.getAttribute('storage-key');
-				// storageObj = JSON.parse(that.getStorage(key));
-				// that.fillTheBlank(storageObj.account, storageObj.password);
 
-				//调用服务器的连接，并传输相应的account和password
 				that.sendMsg(storageObj.account,storageObj.password);
 
-				// //这里如果邮箱登陆失败，就会删除
-				// if (!loginjudge){
-				// 	that.removeStorage(key);
-				// 	loginjudge=true;
-				// }
+
 			} else if (className === 'fa fa-trash'){
 
 				// 删除当前项
@@ -112,7 +103,7 @@ const Plugin = {
 		//确认按钮 传输三个text并直接保存下来
 		confirmBtn.addEventListener('click', function() {
 
-			let accountName = accountNameInput.value;
+			let accountName = accountNameInput.value+"accountName!@#$";
 			let account = accountInput.value;
 			let password = passwordInput.value;
 
@@ -299,7 +290,13 @@ const Plugin = {
 		let btn = document.createElement('button');
 		btn.className = 'account-btn';
 
-		btn.innerText = wording;
+
+		var str = wording.replace('accountName!@#$','');
+
+
+		btn.innerText = str;
+
+
 
 		// icon-container
 		let iconDiv = document.createElement('div');

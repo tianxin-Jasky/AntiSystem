@@ -16,7 +16,7 @@
 }
 table
   {
-    width: 500px;
+    width: 540px;
     padding:10px;
     table-layout:fixed;
     border-collapse:collapse;
@@ -28,7 +28,7 @@ table th
   font-size:1.7em;
   text-align:center;
   white-space: nowrap; text-overflow: ellipsis; overflow: hidden;    
-  width: 125px;
+  width: 135px;
   padding-top:5px;
   padding-bottom:4px;
   background-color:#A7C942;
@@ -41,7 +41,7 @@ table th
   font-size:1.2em;
   text-align:center;
   white-space: nowrap; text-overflow: ellipsis; overflow: hidden;    
-  width: 125px;
+  width: 135px;
   }
 
   table td, table th 
