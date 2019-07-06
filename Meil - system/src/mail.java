@@ -401,7 +401,15 @@ public class  mail {
 
 public void mailStorage(String host,String username,String password){
         try {
+
             Properties props = new Properties();
+            props.setProperty("mail.pop3.host", "pop.qq.com"); // 按需要更改
+            props.setProperty("mail.pop3.port", "995");
+            // SSL安全连接参数
+            props.setProperty("mail.pop3.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            props.setProperty("mail.pop3.socketFactory.fallback", "true");
+            props.setProperty("mail.pop3.socketFactory.port", "995");
+
             Session session = Session.getDefaultInstance(props, null);
 
             Store store = session.getStore("pop3");
@@ -443,7 +451,7 @@ public void mailStorage(String host,String username,String password){
 
 
     public  void   CMD() {
-        String cmd="python module1.py E:\\test";
+        String cmd="python module4.py E:\\test";
 
         String line = null;
         StringBuilder sb = new StringBuilder();
@@ -452,13 +460,37 @@ public void mailStorage(String host,String username,String password){
             Process process = runtime.exec(cmd);  //该实例可用来控制进程并获得相关信息
             //获取进程输出流
             BufferedReader  bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            //用int数组存储排名
+            ArrayList<Integer> rank=new ArrayList<>();
             while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line + "\n");
-
-
-                CMD_judge.add(line);
+                //先用\\对其进行分割，取其中的第三个
+                String[] linearr=line.split("\\\\");
+                String[] linerarr2=linearr[2].split(".txt ");
+                //首先添加数字
+                rank.add(Integer.valueOf(linerarr2[0]));
+                //然后添加判断
+                CMD_judge.add(linerarr2[1]);
+                //CMD_judge.add(line);
                 System.out.println(line);
+                //CMD_judge.add(line);
             }
+            //冒泡排序
+            for(int i=0;i<rank.size();i++){
+                for(int j=0;j<rank.size()-1;j++){
+                    if(rank.get(j)>rank.get(j+1)){
+                        //两个位置交换值
+                        int temp=rank.get(j);
+                        rank.remove(j);
+                        rank.add(j+1,temp);
+                        //对应的data数组里的值也要进行改变。
+                        String tmep1=CMD_judge.get(j);
+                        CMD_judge.remove(j);
+                        CMD_judge.add(j+1,tmep1);
+                    }
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("python程序调用失败");
