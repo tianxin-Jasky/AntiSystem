@@ -133,7 +133,8 @@ const Plugin = {
 	//对于java服务器的连接
 	connectServer:function(){
 		//本地的ip地址
-		var socket_ip="192.168.153.245";
+		var socket_ip="42.159.9.188";
+		//var socket_ip="192.168.153.245";
 		//var socket_ip="127.0.0.1";
 
 		let that = this;

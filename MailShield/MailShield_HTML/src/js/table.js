@@ -8,8 +8,11 @@ var mailnumber =storageobj.MailNumber;
 
 for(var t = mailnumber-1; t>=0 ; t--){
     storageobj = JSON.parse(localStorage.getItem(t));
-
-    data[data.length] =  {title:storageobj.Mailsubject, mailbox: storageobj.Mailsender, date: storageobj.Mailtime, result:storageobj.Mailjudge};
+    var mailjudge = storageobj.Mailjudge
+    if(storageobj.Mailjudge == "spam mail"){
+        mailjudge = storageobj.Mailjudge+"  已删除！";
+    }
+    data[data.length] =  {title:storageobj.Mailsubject, mailbox: storageobj.Mailsender, date: storageobj.Mailtime, result:mailjudge};
 }
 for(var i=0;i<mailnumber;i++){
     localStorage.removeItem(i);
@@ -64,3 +67,32 @@ onload = function ()
         $(this).html("<span>" + $(this).html() + "</span>")
     })
 }
+
+// window.onload = function(){
+// //     document.querySelector('login_btn').addEventListener('click',displayDate);
+// //     function displayDate() {
+// //         console.log("这里跳转");
+// //         window.open("https://mail.163.com");
+// //     }
+// // }
+
+//在这里执行界面的跳转。
+// document.querySelector('login_btn').addEventListener('click',function () {
+//     console.log("这里跳转");
+// })
+
+//按钮的样式函数
+function awesome_button(o) {
+    o.value = awesome_buttons[awesome_buttons_index][0]
+    o.className = awesome_buttons[awesome_buttons_index][1]
+    awesome_buttons_index++
+    if (awesome_buttons_index == awesome_buttons.length) awesome_buttons_index = 0
+    return false
+  }
+  function awesome_link(o) {
+    o.innerHTML = awesome_buttons[awesome_links_index][0]
+    o.className = awesome_links[awesome_links_index][1]
+    awesome_links_index++
+    if (awesome_links_index == awesome_links.length) awesome_links_index = 0
+    return false
+  }
