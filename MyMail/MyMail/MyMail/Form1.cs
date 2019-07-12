@@ -30,7 +30,7 @@ namespace MyMail
             this.button3.Visible = true;
             this.label2.Visible = true;
             this.label3.Visible = true;
-            this.label1.Text = "Welcome To QQ Mail!";
+            this.label1.Text = "欢迎登录qq邮箱";
             whichmail = 1;
         }
 
@@ -43,7 +43,7 @@ namespace MyMail
             this.button3.Visible = true;
             this.label2.Visible = true;
             this.label3.Visible = true;
-            this.label1.Text = "Welcome To 163 Mail!";
+            this.label1.Text = "欢迎登录163邮箱";
             whichmail = 2;
         }
         public static string add = "";

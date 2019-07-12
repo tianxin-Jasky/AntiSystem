@@ -19,7 +19,6 @@ namespace MyMail
 {
     public partial class detail : Form
     {
-        System.Timers.Timer Mytimer;
         int mCount = 0;
         int nowCount = 0;
         int firstCount = 0;
@@ -619,13 +618,7 @@ namespace MyMail
         //初始化
         private void detail_Shown(object sender, EventArgs e)
         {
-
-            int interval = 5000;
-            Mytimer = new System.Timers.Timer(interval);
-            Mytimer.AutoReset = true;
-            Mytimer.Elapsed += new System.Timers.ElapsedEventHandler(Mytimer_tick);
-            Mytimer.Enabled = true;
-            for (int i = 0; i < 15; i++)
+            for(int i = 0; i < 15; i++)
             {
                 mail nm = new mail("", "", "", "", new OpenPop.Mime.Message(new byte[1]));
                 nm.Name = (i).ToString();
@@ -897,26 +890,5 @@ namespace MyMail
             send s = new send();
             s.Show();
         }
-
-        private void Mytimer_tick(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            try
-            {
-                Client.Disconnect();
-                Client.Connect(Form1.add, Form1.port, true);
-                Client.Authenticate(Form1.username, Form1.password);
-                int newCount = Client.GetMessageCount();
-                if (newCount > mCount) { MessageBox.Show("收到新邮件"); updatedata(); }
-                Console.WriteLine(mCount);
-            }
-            catch
-            {
-                Console.WriteLine("更新失败");
-            }
-
-        }
-
-
-
     }
 }
