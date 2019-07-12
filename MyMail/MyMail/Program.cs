@@ -18,6 +18,7 @@ namespace MyMail
             Application.SetCompatibleTextRenderingDefault(false);
             Form1 login = new Form1();
             login.ShowDialog();
+            if(login.DialogResult == DialogResult.OK)
             Application.Run(new detail());
             //Application.Run(new Form1());
         }

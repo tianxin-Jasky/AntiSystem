@@ -14,7 +14,12 @@ namespace MyMail
     {
         public delegate void thisclick(object sender, MyEventArgs e);
         public event thisclick clicked;
+        public event thisclick deleted;
+        public event thisclick toblacklist;
+        public event thisclick torubox;
         public OpenPop.Mime.Message message;
+        public Mymessage mymessage;
+        public bool isdetail = false;
         public mail()
         {
             InitializeComponent();
@@ -37,6 +42,16 @@ namespace MyMail
             this.textBox4.Text = body;
             this.message = message;
         }
+        public void reset(string name, string add, string time, string body, Mymessage message)
+        {
+            this.Visible = true;
+            this.textBox1.Text = name;
+            this.textBox2.Text = add;
+            this.textBox3.Text = time;
+            this.textBox4.Text = body;
+            this.mymessage = message;
+        }
+
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
@@ -50,7 +65,7 @@ namespace MyMail
 
         private void textBox4_Click(object sender, EventArgs e)
         {
-            MyEventArgs mye = new MyEventArgs(message,this.Name);
+            MyEventArgs mye = new MyEventArgs(mymessage,this.Name);
             clicked(sender, mye);
         }
 
@@ -93,12 +108,38 @@ namespace MyMail
         {
             return this.textBox4.Text;
         }
+
+        private void 删除邮件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            MyEventArgs mye = new MyEventArgs(mymessage, this.Name);
+            deleted(sender, mye);
+            Console.WriteLine("de");
+        }
+
+        private void 将用户加入黑名单ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MyEventArgs mye = new MyEventArgs(mymessage, this.Name);
+            toblacklist(sender, mye);
+        }
+
+        private void 放入垃圾箱ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+            MyEventArgs mye = new MyEventArgs(mymessage, this.Name);
+            torubox(sender, mye);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
     public class MyEventArgs : EventArgs
     {
-        public OpenPop.Mime.Message message;
+        public Mymessage message;
         public string name;
-        public MyEventArgs(OpenPop.Mime.Message message,string name)
+        public MyEventArgs(Mymessage message,string name)
         {
             this.name = name;
             this.message = message;

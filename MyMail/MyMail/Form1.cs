@@ -30,7 +30,7 @@ namespace MyMail
             this.button3.Visible = true;
             this.label2.Visible = true;
             this.label3.Visible = true;
-            this.label1.Text = "欢迎登录qq邮箱";
+            this.label1.Text = "Welcome To QQ Mail!";
             whichmail = 1;
         }
 
@@ -43,7 +43,7 @@ namespace MyMail
             this.button3.Visible = true;
             this.label2.Visible = true;
             this.label3.Visible = true;
-            this.label1.Text = "欢迎登录163邮箱";
+            this.label1.Text = "Welcome To 163 Mail!";
             whichmail = 2;
         }
         public static string add = "";
@@ -72,7 +72,13 @@ namespace MyMail
                 }
                 Client = new Pop3Client();
                 Client.Connect(add, port, true);
-                Client.Authenticate(username,password);
+                Client.Authenticate(username,password); 
+                string cpath = Application.StartupPath;
+                string path = cpath + "/" +username;
+                if(false == System.IO.Directory.Exists(path))
+                {
+                    System.IO.Directory.CreateDirectory(path);
+                }
                 this.DialogResult = DialogResult.OK;
             }
             catch

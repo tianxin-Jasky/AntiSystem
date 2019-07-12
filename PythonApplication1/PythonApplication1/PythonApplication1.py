@@ -166,7 +166,6 @@ class EmailToWordCounterTransformer(BaseEstimator, TransformerMixin):
             X_transformed.append(word_counts)
         return np.array(X_transformed)
 
-
 X_few = X_train[:3]
 X_few_wordcounts = EmailToWordCounterTransformer().fit_transform(X_few)
 print(X_few_wordcounts)

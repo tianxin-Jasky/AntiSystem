@@ -4,6 +4,7 @@ from module2 import openemail3
 import joblib
 import sys
 import os
+import tempfile
 m1 = len(sys.argv)
 #加载模型
 mo = joblib.load('test.pkl')
@@ -26,17 +27,19 @@ def get_all_files(dir):
         if os.path.isfile(path):
             files_.append(path)
     return files_
+
 if m1 == 2:
     m = sys.argv[1]
-    if os.path.isfile(m):
+    '''if os.path.isfile(m):
     #预测
         a = mo.predict(openemail(m))
-        print(a)
+        print('ifflie')
         if a[0] == 1:
             print("垃圾邮件")
         else:
             print("正常邮件")
-    if os.path.isdir(m):
+    elif os.path.isdir(m):
+        print('ifdir')
         files = get_all_files(m)
         result = mo.predict(openemail3(files))
         for i in range(0,len(files)):
@@ -46,13 +49,15 @@ if m1 == 2:
                 c = "正常邮件"
             print("文件",files[i],"是",c)
     else:
-        ms = string_to_file(m)
+        print('else')
+        b = bytes(m,encoding='utf-8')
+        ms = string_to_file(b)
         a = mo.predict(openemail2(ms))
         if a[0] == 1:
             print("垃圾邮件")
         else:
             print("正常邮件")
- 
+ '''
 
 elif m1 == 1:
     print("no filename")
@@ -66,4 +71,12 @@ elif m1 > 2:
         else:
             c = "正常邮件"
         print("文件",a[i],"是",c)
-    
+def predict1(filearray):
+    c = ""
+    result = mo.predict(openemail3(filearray))
+    for i in range(0,len(filearray)):
+        if result[i] == 1:
+            c = "垃圾邮件"
+        else:
+            c = "正常邮件"
+        print("文件",filearray[i],"是",c)

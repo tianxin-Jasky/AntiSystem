@@ -46,5 +46,23 @@ namespace MyMail
             }
             this.webBrowser1.DocumentText = body;
         }
+
+        public maildetail(Mymessage message)
+        {
+            InitializeComponent();
+            this.label1.Text = message.displayname;
+            this.label3.Text = message.address;
+            this.label2.Text = message.time;
+            this.webBrowser1.DocumentText = message.body;
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
