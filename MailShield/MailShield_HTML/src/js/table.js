@@ -5,7 +5,7 @@ let storageobj={};
 storageobj = JSON.parse(localStorage.getItem("!！@@##¥"));
 var mailnumber =storageobj.MailNumber;
 
-
+//对data数组进行赋值，输出来自数据库的值
 for(var t = mailnumber-1; t>=0 ; t--){
     storageobj = JSON.parse(localStorage.getItem(t));
     var mailjudge = storageobj.Mailjudge
@@ -37,6 +37,7 @@ for (var i = 0; i < data.length; i++)
     mails.push(new Mail (d["title"], d["mailbox"], d["date"], d["result"]));
 }
 
+//根据邮箱数量动态生成表格
 onload = function ()
 {
     var table = document.createElement("table");
@@ -67,19 +68,6 @@ onload = function ()
         $(this).html("<span>" + $(this).html() + "</span>")
     })
 }
-
-// window.onload = function(){
-// //     document.querySelector('login_btn').addEventListener('click',displayDate);
-// //     function displayDate() {
-// //         console.log("这里跳转");
-// //         window.open("https://mail.163.com");
-// //     }
-// // }
-
-//在这里执行界面的跳转。
-// document.querySelector('login_btn').addEventListener('click',function () {
-//     console.log("这里跳转");
-// })
 
 //按钮的样式函数
 function awesome_button(o) {

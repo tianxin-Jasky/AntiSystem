@@ -12,9 +12,5 @@
 	"browser_action": {
 		"default_title": "智能识别垃圾邮件",
 		"default_popup": "popup.html"
-	},
-
-	"background": {
-		"scripts": []
 	}
 }

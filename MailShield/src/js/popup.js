@@ -63,19 +63,15 @@ const Plugin = {
 			let key = '';
 			let storageObj = {};
 
+             //点击这个按钮，与服务器进行对接
 			if (className === 'account-btn'){
 
 				//target.parentNode.getAttribute('storage-key');是为了获取对应元素的值
 				key = target.parentNode.getAttribute('storage-key');
 				Wrongmail=key;
 				storageObj = JSON.parse(that.getStorage(key));
-
-
 				that.sendMsg(storageObj.account,storageObj.password);
-
-
 			} else if (className === 'fa fa-trash'){
-
 				// 删除当前项
 				key = target.parentNode.parentNode.getAttribute('storage-key');
 				that.removeStorage(key);
@@ -102,18 +98,14 @@ const Plugin = {
 
 		//确认按钮 传输三个text并直接保存下来
 		confirmBtn.addEventListener('click', function() {
-
 			let accountName = accountNameInput.value+"accountName!@#$";
 			let account = accountInput.value;
 			let password = passwordInput.value;
-
 			// empty check
 			if (accountName === '' || account === '' || password === '') {
 				console.info('input incomplete.');
 				return;
 			}
-
-
 			let _accountObj = {
 				account: account,
 				password: password
@@ -136,17 +128,15 @@ const Plugin = {
 		var socket_ip="42.159.9.188";
 		//var socket_ip="192.168.153.245";
 		//var socket_ip="127.0.0.1";
-
 		let that = this;
-
 		socket= new WebSocket('ws://'+socket_ip+':1234');
 
-		console.log("连接服务开始！");
 		socket.onopen = function(event)
 		{
 			console.log("连接服务成功！");
 		};
-		console.log("连接服务结束！");
+
+		//对服务器传的值进行数据处理
 		var mail_subject="";
 		var mail_time="";
 		var mail_sender=""
@@ -156,7 +146,6 @@ const Plugin = {
 		// 监听消息
 		socket.onmessage = function(event)
 		{
-			//console.log('Client received a message',event);
 
 			//这是分割的
 			var str = event.data.split('!@#%&');
@@ -170,12 +159,9 @@ const Plugin = {
 					MailNumber:parseInt(str[0])
 				};
 				let  mail_number = JSON.stringify(MailObj);
+				//分割符号
 				var mai_key = "!！@@##¥";
 				that.setStorage(mai_key,mail_number);
-
-
-
-				//console.log("邮箱的数量：",JSON.parse(localStorage.getItem("!！@@##¥")).MailNumber);
 
 				for(var i=1,j=0;i<str.length;i++,j++){
 					var ramainder = j%4;
@@ -183,7 +169,7 @@ const Plugin = {
 						case 0:
 							mail_subject = str[i];
 							break;
-							//这里不会去考虑 缺少某个数据的情况
+
 						case 1:
 							 mail_time = str[i];
 							 break;
@@ -192,7 +178,7 @@ const Plugin = {
 							break;
 						case 3:
 							mail_judge = str[i];
-							//TODO:在这里去调用跳转界面的函数，用上面已经有的三个元素去给他赋值
+
 							mail_Count++;
 
 							let subject =mail_subject;
@@ -206,6 +192,7 @@ const Plugin = {
 								Mailsender:sender,
 								Mailjudge:judge
 							};
+							//转化之后进行存储
 							let mailStr = JSON.stringify(mailObj);
 							that.setStorage(mail_Count,mailStr);
 							break;
@@ -290,14 +277,9 @@ const Plugin = {
 		// account-btn
 		let btn = document.createElement('button');
 		btn.className = 'account-btn';
-
-
 		var str = wording.replace('accountName!@#$','');
 
-
 		btn.innerText = str;
-
-
 
 		// icon-container
 		let iconDiv = document.createElement('div');
